@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
 
 var MongoDBUtil = require('./modules/mongodb/modules/mongodb/mongodb.module').MongoDBUtil;
 var CustomerController = require('./modules/customer/customer.module')().CustomerController;
@@ -13,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 MongoDBUtil.init();
-
+app.use(cors());
 app.use('/customers', CustomerController);
 app.get('/', function (req, res) {
   var pkg = require(path.join(__dirname, 'package.json'));
